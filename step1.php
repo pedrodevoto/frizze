@@ -10,11 +10,11 @@ include("auth.php");
 <script src="jquery/jquery-ui-1.10.3.custom/js/jquery-1.9.1.js"></script>
 <script src="jquery/jquery-ui-1.10.3.custom/js/jquery-ui-1.10.3.custom.js"></script>
 <script src="js/jquery.form.js"></script>
-<script src="js/jquery.waitforimages.min.js"></script>
 <script src="colorbox/jquery.colorbox-min.js"></script>
 <link rel="stylesheet" type="text/css" href="colorbox/colorbox.css">
 <script>
 function selectPhoto(photo, enc) {
+	$.colorbox.close();
 	if (photo) {
 		var pic = enc?decodeURIComponent(photo.replace(/\+/g, ' ')):photo;
 		$('<img />').prop('src', pic).load(function() {
@@ -24,12 +24,12 @@ function selectPhoto(photo, enc) {
 			width = Math.min(this.width, 780);
 			height = width * this.height / this.width;
 			
-			height = Math.min(height,433);
+			height = Math.min(height, 433);
 			width = height * this.width / this.height;
 			
 			$("#submit").prop("href", "step2.php?pic=" + encodeURIComponent(this.src) + "&width=" + width + "&height=" + height);
 			
-			$("#divRecuadro").css("background-size", width + "px " + height + "px")
+			$("#divRecuadro").css("background-size", width + "px " + height + "px");
 		});
 		$("#divRecuadro").css({"background-image": "url('"+pic+"')", "background-repeat": "no-repeat", "background-position": "center"});
 		$("#cameraImage").hide();
@@ -37,7 +37,6 @@ function selectPhoto(photo, enc) {
 	else {
 		$("#submit").prop("href", "#");
 	}
-	$.colorbox.close();
 }
 function viewAlbums() {
 	$.colorbox({
@@ -50,7 +49,8 @@ function uploadPhoto() {
 	$.colorbox({
 		inline: true,
 		href: "#photoUpload",
-		width: "50%"
+		width: 440,
+		height: 280
 	});	
 }
 $(document).ready(function() {
@@ -90,11 +90,17 @@ $(document).ready(function() {
 	    	<a href="index.php"><img src="img/anterior.png" border="0" /></a>&nbsp;&nbsp;<a id="submit" href="#"><img src="img/siguiente.png" border="0" /></a>
         </div>
     </div>
-	<div style="display:none">
-		<div id="photoUpload">
+	<div style="display:none; background-color:#65d5e9">
+		<div id="photoUpload" style="background-color:#65d5e9; padding:5px">
 			<form id="photoUploadForm" action="upload_photo.php" method="post" enctype="multipart/form-data">
-				<p><input name="photo" id="photoUploadFile" type="file" /></p>
-				<p><input type="submit" value="Subir" /></p>
+				<div style="width:100%; text-align:center; margin-bottom:20px; margin-top:5px">
+                	<p><img src="img/header-small.png" /></p>
+                	<p style="font-family:Arial, Helvetica, sans-serif; font-size:12px; color:#FFFFFF">Elegí una foto de tu computadora</p>
+                </div>
+                <div style="width:100%; text-align:center"><input name="photo" id="photoUploadFile" type="file" /></div>
+				<div style="width:100%; text-align:center; margin-top:20px; padding-bottom:20px;">
+	                <input type="image" src="img/subir.png" alt="Submit Form" onclick="document.photoUploadForm.submit();" />
+                </div>
 			</form>
 		</div>
 	</div>

@@ -4,20 +4,23 @@ include('functions.php');
 
 // APP VARIABLES
 $app_url = "http://www.facebook.com/okdevtest?v=app_482185265209828";
-// $app_url = "http://www.facebook.com/OKDeveloperTest/app_461268303962969";
+// $app_url = "http://www.facebook.com/OKDeveloperTest?v=app_461268303962969";
 $app_id = "482185265209828";
 // $app_id = "461268303962969";
-$canvas_page = "http://localhost/frizze/?authenticated";
-// $canvas_page = "http://www.poncebuenosaires.com/hosting/frizze/escaripelas/?authenticated";
+$canvas_page = "http://localhost/frizze/";
+// $canvas_page = "http://www.poncebuenosaires.com/hosting/frizze/escaripelas/";
 
-$auth_url = "https://www.facebook.com/dialog/oauth?client_id=" . $app_id . "&redirect_uri=" . urlencode($canvas_page);
+$auth_url = "https://www.facebook.com/dialog/oauth?client_id=" . $app_id . "&redirect_uri=" . urlencode($canvas_page."?authenticated");
 $auth_url .= "&scope=user_photos,friends_photos,publish_stream";
 
 if (isset($_GET['authenticated'])) {
 	session_destroy();
 	echo("<script> top.location.href='" . $app_url . "'</script>");
 }
-	
+if (isset($_GET['thankyou'])) {
+	echo("<script> top.location.href='" . $app_url . "&app_data=thankyou'</script>");
+}
+
 if (isset($_REQUEST['signed_request'])) {
 	$signed_request = $_REQUEST['signed_request'];
 	list($encoded_sig, $payload) = explode('.', $signed_request, 2); 

@@ -1,6 +1,10 @@
 <?php
 include("auth.php");
 $pic = isset($_GET['pic'])?urldecode($_GET['pic']):"";
+$filename = 'upload/' . substr($pic, strrpos($pic, '/') + 1);
+if ($pic) {
+	copy($pic, $filename);
+}
 $width = isset($_GET['width'])?$_GET['width']:"";
 $height = isset($_GET['height'])?$_GET['height']:"";
 ?>
@@ -46,8 +50,8 @@ $(function() {
 			$('.ui-resizable').resizable('destroy');
 			$(div).css('border','1px dashed white');
 			$(div).resizable({
-				maxHeight: 200,
-				maxWidth:200,
+				maxHeight: 300,
+				maxWidth:300,
 				minHeight: 77,
 				minWidth: 73
 			});
@@ -75,7 +79,7 @@ $(function() {
 						imgBase64: dataURL
 					}
 				}).done(function(o) {
-					window.location.href = "step3.php";
+					window.location.href = "step3.php?pic="+encodeURIComponent(o);
 				});
 			}
 		});
@@ -85,6 +89,9 @@ $(function() {
 	});
 	
 });
+$(document).ready(function() {
+	$("#divRecuadro").css({"background-image": "url('<?=$filename?>')", "background-repeat": "no-repeat", "background-position": "center", "background-size": "<?=$width?>px <?=$height?>px"});
+})
 </script>
 </head>
 
@@ -94,17 +101,17 @@ $(function() {
     	<div id="divTituloS1">
 	    	<img src="img/titulo-s2.png" />        
         </div>
-		<div id="divRecuadro" style="background:url(<?=$pic?>);background-repeat:no-repeat;background-size: <?=$width?>px <?=$height?>px;background-position:center">
+		<div id="divRecuadro">
             <div style="float:left; padding:2px;" id="divStep"><img src="img/s2.png" /></div>
             <div style="float:right; padding:0px; width:131px; height:435px; background:url(img/arrastra.png)" id="divArrastra">
            	  <div style="margin-top:140px; text-align:center; width:104px; padding-left:25px;">
                 <div style="height:77px; width:73px;" id="esc1" class="escarapela"><img src="img/escarapela1.png" width="100%" height="100%" class="still" style="cursor:move"/></div>
                 <div style="height:15px;"></div>
-                <div style="height:77px; width:73px;" id="esc2" class="escarapela"><img src="img/escarapela1.png" width="100%" height="100%" class="still" style="cursor:move" /></div>
+                <div style="height:77px; width:73px;" id="esc2" class="escarapela"><img src="img/escarapela2.png" width="100%" height="100%" class="still" style="cursor:move" /></div>
                 <div style="height:15px;"></div>
-                <div style="height:77px; width:73px;" id="esc3" class="escarapela"><img src="img/escarapela1.png" width="100%" height="100%" class="still" style="cursor:move" /></div>
-                <div style="height:77px; width:73px; margin-top:15px;" id="divLimpiar">LIMPIAR</div>
+                <div style="height:77px; width:73px;" id="esc3" class="escarapela"><img src="img/escarapela3.png" width="100%" height="100%" class="still" style="cursor:move" /></div>
               </div>
+              <div style="height:20px; width:100px; margin-top:8px; margin-left:15px" id="divLimpiar"><img src="img/borrar.png" width="100" height="20" style="cursor:pointer" /></div>
             </div><br />
       </div>
     	<div id="divTxtBottom">

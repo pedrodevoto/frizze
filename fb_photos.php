@@ -10,7 +10,7 @@ include('functions.php');
 echo "<a href='#' onclick='viewAlbums()'>Volver a álbumes</a>";
 echo "<br />";
 
-echo "<table align='center'>";
+echo "<table align='center' style='width:440px;margin:auto;'>";
 $album_id = $_GET['id'];
 $arr_res=getURL("$album_id/photos?limit=25&access_token=".$token."&&".$paging);
 $pictures=$arr_res['data'];
@@ -23,8 +23,8 @@ foreach($pictures as $picture) {
 		$pic_thumb=$picture['picture'];
 		$pic_link=$picture['source'];
 
-		echo "<td id='tableCell'>";             
-		echo "<a onclick='selectPhoto(\"".urlencode($pic_link)."\", true)' href='#'>";
+		echo "<td style='margin:2px;text-align:center;background-color:#f0f0f0;padding: 4px 20px 4px 4px;color:#FFFFFF;height:144px;font-size:11px;'>";           
+		echo "<a style='text-decoration:none' onclick='selectPhoto(\"".urlencode($pic_link)."\", true)' href='#'>";
 		echo "<img src='$pic_thumb' border='0'>";
 		echo "</a>";
 		echo "</td>";
@@ -52,9 +52,9 @@ echo "</table>";
 echo "<div id='row' style='clear: both'>";
 echo "<br /><span style='font-size:14px'>";
 
-echo "<a class='link' " . ($previous?"onclick='paging(\"$previous\", \"album\")'":"").">ANTERIOR</a>";
+echo "<a style='cursor:pointer' " . ($previous?"onclick='paging(\"$previous\", \"album\")'":"")."><img src='img/anterior.png' border='0' /></a>";
 echo "&nbsp;&nbsp;";
-echo "<a class='link' " . ($next?"onclick='paging(\"$next\", \"album\")'":"").">SIGUIENTE</a>";
+echo "<a style='cursor:pointer' " . ($next?"onclick='paging(\"$next\", \"album\")'":"")."><img src='img/siguiente.png' border='0' /></a>";
 
 echo "</span>";
 echo "</div>";
