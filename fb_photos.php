@@ -7,11 +7,12 @@ if (!isset($_GET['id'])) {
 }
 include('functions.php');
 //ini_set('display_errors',true);
+echo "<a href='#' onclick='viewAlbums()'>Volver a álbumes</a>";
 echo "<br />";
 
 echo "<table align='center'>";
 $album_id = $_GET['id'];
-$arr_res=getURL("$album_id/photos?access_token=".$token."&&".$paging);
+$arr_res=getURL("$album_id/photos?limit=25&access_token=".$token."&&".$paging);
 $pictures=$arr_res['data'];
 $paging=$arr_res['paging'];
 $previous=isset($paging['previous'])?$paging['previous']:false;
@@ -23,7 +24,7 @@ foreach($pictures as $picture) {
 		$pic_link=$picture['source'];
 
 		echo "<td id='tableCell'>";             
-		echo "<a onclick='selectPhoto(\"".urlencode($pic_link)."\")' href='#'>";
+		echo "<a onclick='selectPhoto(\"".urlencode($pic_link)."\", true)' href='#'>";
 		echo "<img src='$pic_thumb' border='0'>";
 		echo "</a>";
 		echo "</td>";

@@ -2,7 +2,7 @@
 cargando...
 </div>
 <script>
-$.ajax({
+$.ajax({ 
 	url: "fb_albums.php",
 }).done(function(data) {
 	$('#items').html(data);

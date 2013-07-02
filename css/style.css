@@ -1,0 +1,36 @@
+@charset "utf-8";
+
+*{ 
+	padding:0;
+	margin:0;
+}
+
+body{
+	font-family:Arial, Helvetica, sans-serif; font-size:11px; overflow:hidden;
+	background-color:#e5feff;
+}
+
+#divGeneral{
+	width:746px;
+	background:url(../img/background.jpg);
+	background-repeat:repeat-x;
+	text-align:left;
+	padding:32px;
+}
+
+#divLogoInicio{
+	width:100%;
+	text-align:center;
+	margin-bottom:55px;
+}
+
+#divBtnIngresar{
+	width:100%;
+	text-align:center;
+}
+
+#divTxtBottom{
+	margin-top:100px;
+	width:100%;
+	text-align:center;
+}
