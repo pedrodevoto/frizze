@@ -1,4 +1,5 @@
 <?php
+session_start();
 include('functions.php');
 $app_url = "http://www.facebook.com/okdevtest?v=app_482185265209828";
 $app_data = '';
@@ -23,6 +24,7 @@ if (isset($_REQUEST['signed_request'])) {
 	}
 	if (isset($data['oauth_token'])) {
 		$token = $data['oauth_token'];
+		$_SESSION['token'] = $token;
 	}
 	if (isset($data['app_data'])) {
 		$app_data = $data['app_data'];
@@ -34,10 +36,12 @@ if (isset($_REQUEST['signed_request'])) {
 <html>
 	<head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<link rel="stylesheet" type="text/css" href="css/master.css">
+	<!--<link rel="stylesheet" type="text/css" href="css/master.css">-->
+	<link rel="stylesheet" type="text/css" href="colorbox/colorbox.css">
 	
-	<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
-	<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+	<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
+	<script src="colorbox/jquery.colorbox-min.js"></script>
 	
 	<style>
 	 body { overflow: hidden; height: 800px }
@@ -46,6 +50,17 @@ if (isset($_REQUEST['signed_request'])) {
 		function goTo(a) {
 			top.location.href='<?=$app_url?>&app_data=' + a;
 		}
+		function selectPhoto(photo) {
+			$("#image").html("<img src='"+decodeURIComponent(photo.replace(/\+/g, ' '))+"' />");
+			$.colorbox.close();
+		}
+		$(document).ready(function() {
+			$('#viewAlbums').colorbox({
+				href: "fb_box.php",
+				height:400,
+				width:600
+			});
+		})
 	</script>
 	
 	</head>
@@ -53,76 +68,20 @@ if (isset($_REQUEST['signed_request'])) {
 		<?php
 		switch ($app_data) {
 			case "splash":
-			default:
 				?>
 				
-				splash
+				<span id='a'>splash</span>
 				<br />
-				<a href='#' onclick='goTo("select_album")'>select_album</a>
+				<a href='#' onclick='goTo("select_pic")'>seleccionar pic</a>
 				
 				<?php
 				break;
-			case "select_album":
+			case "select_pic":
+			default:
 				?>
-				<div id="divSelect" class="font">
-					select album
-					<?php
-				
-					echo "<br />";
-					echo "<table align='center'>";
-					
-					$arr_res = getURL("me/albums?limit=25&access_token=".$token);
-					$albums=$arr_res['data'];
-					$paging=$arr_res['paging'];
-					$previous=isset($paging['previous'])?$paging['previous']:false;
-					$next=isset($paging['next'])?$paging['next']:false;
-					
-					$i=0;
-					echo "<tr>";
-					foreach($albums as $album) {
-						$album_id = $album['id'];					
-						/*
-						$pic=$album['cover_photo'];
-						$arr_res = getURL("$pic?access_token=".$_GET['token']);
-						$album_thumb=$arr_res['picture'];
-						*/
-						$arr_res = getURL($album_id."/photos?access_token=".$token);		
-						$album_thumb=$arr_res['data'][0]['picture'];
-						
-						
-						echo "<td id='tableCell'>";
-						echo "<a onclick='selectPhoto(".$album_id.");' class='link'><img src='$album_thumb' border='0'>";
-						echo "<br /><br />";
-						echo ShortenText($album['name'],20)."</a><br><br>";	
-						echo "</td>";
-
-						if ($i==2){
-							echo "</tr>
-							<tr>";
-							$i=0;
-						}else{
-							$i++;
-						}
-
-					}
-					if ($i<2){
-					while ($i<=2){
-						echo "<td></td>";
-						if($i==2){
-							echo "</tr>";
-						}
-						$i++;
-					}
-					}else{
-						echo "<td></td><td></td><td></td>";
-					}
-					echo "</table>";
-					echo "<div id='row' style='clear: both; padding-bottom:20px;'>";
-					echo "<br /><span style='font-size:14px'><a class='link' onclick='paging(\"$previous\", \"album\")'>ANTERIOR&nbsp;&nbsp;<a class='link' onclick='paging(\"$next\", \"album\")'>SIGUIENTE</span>";
-					echo "</div>";
-				
-					?>
-				</div>
+				<a href="#" id="viewAlbums">ver albumes</a>
+				<br />
+				<div id='image'></div>
 				<?php
 				break;
 		}
