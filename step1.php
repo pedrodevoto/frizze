@@ -21,10 +21,10 @@ function selectPhoto(photo, enc) {
 
 			var width, height;
 			
-			width = this.width > 780?780:this.width;
+			width = Math.min(this.width, 780);
 			height = width * this.height / this.width;
 			
-			height = height>433?433:height;
+			height = Math.min(height,433);
 			width = height * this.width / this.height;
 			
 			$("#submit").prop("href", "step2.php?pic=" + encodeURIComponent(this.src) + "&width=" + width + "&height=" + height);
