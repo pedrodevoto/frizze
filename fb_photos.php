@@ -1,6 +1,6 @@
 <?php
 session_start();
-$token = $_SESSION['token'];
+$token = $_SESSION['data']['oauth_token'];
 $paging = isset($_GET['paging'])?urldecode($_GET['paging']):"";
 if (!isset($_GET['id'])) {
 	die();

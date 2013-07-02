@@ -1,3 +1,9 @@
+<?php
+include("auth.php");
+$pic = isset($_GET['pic'])?urldecode($_GET['pic']):"";
+$width = isset($_GET['width'])?$_GET['width']:"";
+$height = isset($_GET['height'])?$_GET['height']:"";
+?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -88,7 +94,7 @@ $(function() {
     	<div id="divTituloS1">
 	    	<img src="img/titulo-s2.png" />        
         </div>
-		<div id="divRecuadro" style="background:url(img/fotoprueba.jpg)">
+		<div id="divRecuadro" style="background:url(<?=$pic?>);background-repeat:no-repeat;background-size: <?=$width?>px <?=$height?>px;background-position:center">
             <div style="float:left; padding:2px;" id="divStep"><img src="img/s2.png" /></div>
             <div style="float:right; padding:0px; width:131px; height:435px; background:url(img/arrastra.png)" id="divArrastra">
            	  <div style="margin-top:140px; text-align:center; width:104px; padding-left:25px;">

@@ -1,6 +1,6 @@
 <?php
 session_start();
-$token = $_SESSION['token'];
+$token = $_SESSION['data']['oauth_token'];
 include('functions.php');
 echo "<table align='center'>";
 
