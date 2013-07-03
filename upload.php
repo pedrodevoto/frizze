@@ -10,7 +10,7 @@ if(strtolower($_SERVER['REQUEST_METHOD']) != 'post'){
 	exit;
 }
 
-$folder = 'upload_tmp/';
+$folder = 'upload/';
 $filename =  $_SESSION['data']['user_id'] . time() .'.jpg';
 
 $original = $folder.$filename;
@@ -32,6 +32,9 @@ if (!$result) {
 	exit;
 }
 
+echo '{"status":1,"message":"Success!","filename":"upload/'.$filename.'"}';
+exit;
+
 $info = getimagesize($original);
 if($info['mime'] != 'image/jpeg'){
 	unlink($original);
@@ -47,5 +50,5 @@ imagecopyresampled($newImage,$origImage,0,0,0,0,154,110,520,370);
 
 imagejpeg($newImage,'upload/'.$filename);
 
-echo '{"status":1,"message":"Success!","filename":"'.$filename.'"}';
+echo '{"status":1,"message":"Success!","filename":"upload/'.$filename.'"}';
 ?>

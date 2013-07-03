@@ -1,8 +1,8 @@
 <?php
 include("auth.php");
 $pic = isset($_GET['pic'])?urldecode($_GET['pic']):"";
-$filename = basename($pic);
-$filename = explode('.', $filename)[0];
+$basename = basename($pic);
+list($filename, $extension) = explode('.', $basename);
 $link = urlencode($app_url . "&app_data=view" . $filename);
 $picture = urlencode($canvas_page.$pic);
 $name = urlencode("FRIZZÉ - Escaripelas");

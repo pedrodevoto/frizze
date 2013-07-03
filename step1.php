@@ -150,21 +150,21 @@ $(document).ready(function() {
 	</div>
 	<div style="display:none;">
 		<div id="photoTake" style="padding:5px">
-<div id="camera">
-	<span class="camTop"></span>
-    
-    <div id="screen"></div>
-    <div id="buttons">
-    	<div class="buttonPane">
-        	<a id="shootButton" href="" class="blueButton">Shoot!</a>
-        </div>
-        <div class="buttonPane hidden">
-        	<a id="cancelButton" href="" class="blueButton">Cancel</a> <a id="uploadButton" href="" class="greenButton">Upload!</a>
-        </div>
-    </div>
-    
-    <span class="settings"></span>
-</div>
+			<div id="camera">
+				<span class="camTop"></span>
+				
+				<div id="screen"></div>
+				<div id="buttons">
+					<div class="buttonPane">
+						<a id="shootButton" href="" class="blueButton">Shoot!</a>
+					</div>
+					<div class="buttonPane hidden">
+						<a id="cancelButton" href="" class="blueButton">Cancel</a> <a id="uploadButton" href="" class="greenButton">Upload!</a>
+					</div>
+				</div>
+				
+				<span class="settings"></span>
+			</div>
 		</div>
 	</div>
 </body>
