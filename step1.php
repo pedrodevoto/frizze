@@ -11,11 +11,14 @@ include("auth.php");
 <script src="jquery/jquery-ui-1.10.3.custom/js/jquery-ui-1.10.3.custom.js"></script>
 <script src="js/jquery.form.js"></script>
 <script src="colorbox/jquery.colorbox-min.js"></script>
+<script src="webcam/webcam.js"></script>
+<script src="js/script.js"></script>
 <link rel="stylesheet" type="text/css" href="colorbox/colorbox.css">
 <script>
 function selectPhoto(photo, enc) {
 	$.colorbox.close();
 	if (photo) {
+		$("#divRecuadro").css({"background-image": "url('img/loading.gif')", "background-repeat": "no-repeat", "background-position": "center", "background-size": "32px"});
 		var pic = enc?decodeURIComponent(photo.replace(/\+/g, ' ')):photo;
 		$('<img />').prop('src', pic).load(function() {
 
@@ -28,19 +31,19 @@ function selectPhoto(photo, enc) {
 			width = height * this.width / this.height;
 			
 			$("#submit").prop("href", "step2.php?pic=" + encodeURIComponent(this.src) + "&width=" + width + "&height=" + height);
-			
 			$("#divRecuadro").css("background-size", width + "px " + height + "px");
+			$("#divRecuadro").css({"background-image": "url('"+pic+"')", "background-repeat": "no-repeat", "background-position": "center"});
 		});
-		$("#divRecuadro").css({"background-image": "url('"+pic+"')", "background-repeat": "no-repeat", "background-position": "center"});
 		$("#cameraImage").hide();
 	}
 	else {
 		$("#submit").prop("href", "#");
 	}
 }
-function viewAlbums() {
+function openAlbums() {
 	$.colorbox({
-		href: "fb_box.php",
+		inline: true,
+		href: "#fbBox",
 		height:400,
 		width:600
 	});
@@ -51,6 +54,14 @@ function uploadPhoto() {
 		href: "#photoUpload",
 		width: 440,
 		height: 280
+	});	
+}
+function takePhoto() {
+	$.colorbox({
+		inline: true,
+		href: "#photoTake",
+		width: 650,
+		height: 620
 	});	
 }
 $(document).ready(function() {
@@ -78,8 +89,8 @@ $(document).ready(function() {
 				<!--</a>-->
 					<map name="menumap">
 						<area shape="rect" coords="0,0,221,35" href="#" onclick="uploadPhoto()" />
-						<area shape="rect" coords="0,45,221,75" href="#" onclick="viewAlbums()" />
-						<area shape="rect" coords="0,85,221,116" href="#" onclick="alert('webcam')" />
+						<area shape="rect" coords="0,45,221,75" href="#" onclick="openAlbums()" />
+						<area shape="rect" coords="0,85,221,116" href="#" onclick="takePhoto()" />
                     </map>
 			</div><br />
             <div style="width:100%; text-align:center; margin-top:164px;">
@@ -96,12 +107,64 @@ $(document).ready(function() {
 				<div style="width:100%; text-align:center; margin-bottom:20px; margin-top:5px">
                 	<p><img src="img/header-small.png" /></p>
                 	<p style="font-family:Arial, Helvetica, sans-serif; font-size:12px; color:#FFFFFF">Elegí una foto de tu computadora</p>
+                	<p style="font-family:Arial, Helvetica, sans-serif; font-size:12px; color:#FFFFFF">Máximo 2 MB</p>
                 </div>
                 <div style="width:100%; text-align:center"><input name="photo" id="photoUploadFile" type="file" /></div>
 				<div style="width:100%; text-align:center; margin-top:20px; padding-bottom:20px;">
 	                <input type="image" src="img/subir.png" alt="Submit Form" onclick="document.photoUploadForm.submit();" />
                 </div>
 			</form>
+		</div>
+	</div>	
+	<div style="display:none">
+		<div id="fbBox" style="background-color:#65d5e9; padding:5px;font-family:Arial, Helvetica, sans-serif; font-size:12px; color:#FFFFFF">
+			<div style="width:100%; text-align:center; margin-bottom:20px; margin-top:5px">
+				<p><img src="img/header-small.png" /></p>
+				<p>Seleccioná una foto de uno de tus álbumes</p>
+			</div>
+			<div style="text-align:center" id="items">
+			
+			</div>
+		</div>
+
+		<script>
+		function loadAlbums(paging) {
+			$('#items').html('<div style="width:100%; text-align:center; height:200px">Cargando...</div>');
+			$.ajax({ 
+				url: "fb_albums.php?paging="+paging,
+			}).done(function(data) {
+				$('#items').html(data);
+			});
+		}
+		function viewAlbum(id, paging) {
+			$('#items').html('<div style="width:100%; text-align:center; height:200px">Cargando...</div>');
+			$.ajax({
+				url: "fb_photos.php?id="+id+"&paging="+paging,
+			}).done(function(data) {
+				$('#items').html(data);
+			});
+		}
+		loadAlbums();
+		</script>
+
+	</div>
+	<div style="display:none;">
+		<div id="photoTake" style="padding:5px">
+<div id="camera">
+	<span class="camTop"></span>
+    
+    <div id="screen"></div>
+    <div id="buttons">
+    	<div class="buttonPane">
+        	<a id="shootButton" href="" class="blueButton">Shoot!</a>
+        </div>
+        <div class="buttonPane hidden">
+        	<a id="cancelButton" href="" class="blueButton">Cancel</a> <a id="uploadButton" href="" class="greenButton">Upload!</a>
+        </div>
+    </div>
+    
+    <span class="settings"></span>
+</div>
 		</div>
 	</div>
 </body>

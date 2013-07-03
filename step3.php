@@ -1,10 +1,10 @@
 <?php
 include("auth.php");
 $pic = isset($_GET['pic'])?urldecode($_GET['pic']):"";
-$filename = substr($pic, strrpos($pic, '.') + 1);
-
+$filename = basename($pic);
+$filename = explode('.', $filename)[0];
 $link = urlencode($app_url . "&app_data=view" . $filename);
-$picture = urlencode($canvas_page."/".$pic);
+$picture = urlencode($canvas_page.$pic);
 $name = urlencode("FRIZZÉ - Escaripelas");
 $caption = urlencode("Caption");
 $description = urlencode("Description");
@@ -23,7 +23,11 @@ $(document).ready(function() {
 	$("#divRecuadro").css({"background-image": "url('<?=$pic?>')", "background-repeat": "no-repeat", "background-position": "center"});
 })
 function share() {
-	top.location.href = "https://www.facebook.com/dialog/feed?app_id=<?=$app_id?>&link=<?=$link?>&picture=<?=$picture?>&name=<?=$name?>&caption=<?=$caption?>&description=<?=$description?>&redirect_uri=<?=$redirect_uri?>";
+	$.ajax({
+		url: "publish_photo.php?pic="+encodeURIComponent('<?=$pic?>')
+	}).done(function(data) {
+		top.location.href = "https://www.facebook.com/dialog/feed?app_id=<?=$app_id?>&link=<?=$link?>&picture=<?=$picture?>&name=<?=$name?>&caption=<?=$caption?>&description=<?=$description?>&redirect_uri=<?=$redirect_uri?>";
+	});
 }
 </script>
 </head>

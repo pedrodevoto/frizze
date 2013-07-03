@@ -22,11 +22,11 @@ $height = isset($_GET['height'])?$_GET['height']:"";
 <script src="js/html2canvas.js"></script>
 <script>
 $(function() {
+	$('#divLogo').hide();
 	$('#loading').hide();
 	$(".escarapela").draggable({helper: "clone"});
 	$( "#divRecuadro" ).droppable({
 		drop: function (e, ui) {
-	
 			if ($(ui.draggable)[0].id != "") {
 				x = ui.helper.clone();
 				ui.helper.remove();
@@ -38,6 +38,7 @@ $(function() {
 				x.children('img').removeClass('still');
 				x.children('img').addClass('moved');
 				x.appendTo('#divRecuadro');
+				//alert('test1');
 			}
 	
 		}
@@ -67,6 +68,7 @@ $(function() {
 		$('#loading').show();
 		$('#divArrastra').hide();
 		$('#divStep').hide();
+		$('#divLogo').show();
 		$('.still').css('border','0px');
 		$('.ui-resizable').resizable('destroy');
 		html2canvas($( "#divRecuadro" ), {
@@ -102,18 +104,21 @@ $(document).ready(function() {
 	    	<img src="img/titulo-s2.png" />        
         </div>
 		<div id="divRecuadro">
-            <div style="float:left; padding:2px;" id="divStep"><img src="img/s2.png" /></div>
+            <div style="float:left; padding:2px;" id="divLogo"><img src="img/header-small1.png" /></div>
+            
+        <div style="float:left; padding:2px;" id="divStep"><img src="img/s2.png" /></div>            
+        	
             <div style="float:right; padding:0px; width:131px; height:435px; background:url(img/arrastra.png)" id="divArrastra">
-           	  <div style="margin-top:140px; text-align:center; width:104px; padding-left:25px;">
-                <div style="height:77px; width:73px;" id="esc1" class="escarapela"><img src="img/escarapela1.png" width="100%" height="100%" class="still" style="cursor:move"/></div>
-                <div style="height:15px;"></div>
-                <div style="height:77px; width:73px;" id="esc2" class="escarapela"><img src="img/escarapela2.png" width="100%" height="100%" class="still" style="cursor:move" /></div>
-                <div style="height:15px;"></div>
-                <div style="height:77px; width:73px;" id="esc3" class="escarapela"><img src="img/escarapela3.png" width="100%" height="100%" class="still" style="cursor:move" /></div>
-              </div>
-              <div style="height:20px; width:100px; margin-top:8px; margin-left:15px" id="divLimpiar"><img src="img/borrar.png" width="100" height="20" style="cursor:pointer" /></div>
+           		<div style="margin-top:140px; text-align:center; width:104px; padding-left:25px;">
+                    <div style="height:77px; width:73px; z-index:6" id="esc1" class="escarapela"><img src="img/escarapela1.png" width="100%" height="100%" class="still" style="cursor:move"/></div>
+                    <div style="height:15px;"></div>
+                    <div style="height:77px; width:73px; z-index:6" id="esc2" class="escarapela"><img src="img/escarapela2.png" width="100%" height="100%" class="still" style="cursor:move" /></div>
+                    <div style="height:15px;"></div>
+                    <div style="height:77px; width:73px; z-index:6" id="esc3" class="escarapela"><img src="img/escarapela3.png" width="100%" height="100%" class="still" style="cursor:move" /></div>
+            	</div>
+            	<div style="height:20px; width:100px; margin-top:8px; margin-left:15px" id="divLimpiar"><img src="img/borrar.png" width="100" height="20" style="cursor:pointer" /></div>
             </div><br />
-      </div>
+		</div>
     	<div id="divTxtBottom">
 	    	<a href="step1.php"><img src="img/anterior.png" border="0" /></a>&nbsp;&nbsp;<a style="cursor:pointer" id="btnSiguiente"><img src="img/siguiente.png" border="0" /></a>
         </div>

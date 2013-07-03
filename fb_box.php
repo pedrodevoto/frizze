@@ -9,18 +9,20 @@
 </div>
 
 <script>
-$.ajax({ 
-	url: "fb_albums.php",
-}).done(function(data) {
-	$('#items').html(data);
-});
-
-function viewAlbum(id) {
-	$('#items').html('<div style="width:100%; text-align:center; height:200px">Cargando...</div>');
-	$.ajax({
-		url: "fb_photos.php?id="+id,
+function viewAlbums(paging) {
+	$.ajax({ 
+		url: "fb_albums.php?paging="+paging,
 	}).done(function(data) {
 		$('#items').html(data);
 	});
 }
+function viewAlbum(id, paging) {
+	$('#items').html('<div style="width:100%; text-align:center; height:200px">Cargando...</div>');
+	$.ajax({
+		url: "fb_photos.php?id="+id+"&paging="+paging,
+	}).done(function(data) {
+		$('#items').html(data);
+	});
+}
+viewAlbums();
 </script>

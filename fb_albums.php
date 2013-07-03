@@ -1,14 +1,15 @@
 <?php
 session_start();
 $token = $_SESSION['data']['oauth_token'];
+$paging = !empty($_GET['paging'])?urldecode($_GET['paging']):"";
 include('functions.php');
 echo "<table align='center' style='width:440px;margin:auto;'>";
 
-$arr_res = getURL("me/albums?limit=9&access_token=".$token);
+$arr_res = getURL("me/albums?limit=15&access_token=".$token."&&".$paging);
 $albums=$arr_res['data'];
 $paging=$arr_res['paging'];
-$previous=isset($paging['previous'])?$paging['previous']:false;
-$next=isset($paging['next'])?$paging['next']:false;
+$previous=isset($paging['previous'])?$paging['cursors']['before']:false;
+$next=isset($paging['next'])?$paging['cursors']['after']:false;
 
 $i=0;
 echo "<tr>";
@@ -50,9 +51,9 @@ echo "</table>";
 echo "<div id='row' style='clear: both; padding-bottom:20px;'>";
 echo "<br /><span style='font-size:14px'>";
 
-echo "<a style='cursor:pointer' " . ($previous?"onclick='paging(\"$previous\", \"album\")'":"")."><img src='img/anterior.png' border='0' /></a>";
+echo "<a style='cursor:pointer' " . ($previous?"onclick='loadAlbums(\"before=$previous\")'":"")."><img src='img/anterior.png' border='0' /></a>";
 echo "&nbsp;&nbsp;";
-echo "<a style='cursor:pointer' " . ($next?"onclick='paging(\"$next\", \"album\")'":"")."><img src='img/siguiente.png' border='0' /></a>";
+echo "<a style='cursor:pointer' " . ($next?"onclick='loadAlbums(\"after=$next\")'":"")."><img src='img/siguiente.png' border='0' /></a>";
 
 echo "</span>";
 echo "</div>";

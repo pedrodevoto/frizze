@@ -17,7 +17,12 @@ body{
 	text-align:left;
 	padding:32px;
 }
-
+#divRecuadro{
+	width:100%;
+	background-color:#f0f0f0;
+	height:433px;
+	text-align:center;
+}
 #divLogoInicio{
 	width:100%;
 	text-align:center;

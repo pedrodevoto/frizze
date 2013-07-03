@@ -1,22 +1,23 @@
 <?php
 session_start();
 $token = $_SESSION['data']['oauth_token'];
-$paging = isset($_GET['paging'])?urldecode($_GET['paging']):"";
+$paging = !empty($_GET['paging'])?urldecode($_GET['paging']):"";
 if (!isset($_GET['id'])) {
 	die();
 }
 include('functions.php');
 //ini_set('display_errors',true);
-echo "<a href='#' onclick='viewAlbums()'>Volver a álbumes</a>";
+echo "<a href='#' onclick='loadAlbums()'>Volver a álbumes</a>";
 echo "<br />";
 
 echo "<table align='center' style='width:440px;margin:auto;'>";
 $album_id = $_GET['id'];
-$arr_res=getURL("$album_id/photos?limit=25&access_token=".$token."&&".$paging);
+$arr_res=getURL("$album_id/photos?limit=15&access_token=".$token."&&".$paging);
 $pictures=$arr_res['data'];
 $paging=$arr_res['paging'];
-$previous=isset($paging['previous'])?$paging['previous']:false;
-$next=isset($paging['next'])?$paging['next']:false;
+$previous=isset($paging['previous'])?$paging['cursors']['before']:false;
+$next=isset($paging['next'])?$paging['cursors']['after']:false;
+
 $i=0;
 echo "<tr>";
 foreach($pictures as $picture) {
@@ -52,9 +53,9 @@ echo "</table>";
 echo "<div id='row' style='clear: both'>";
 echo "<br /><span style='font-size:14px'>";
 
-echo "<a style='cursor:pointer' " . ($previous?"onclick='paging(\"$previous\", \"album\")'":"")."><img src='img/anterior.png' border='0' /></a>";
+echo "<a style='cursor:pointer' " . ($previous?"onclick='viewAlbum(\"$album_id\", \"before=$previous\")'":"")."><img src='img/anterior.png' border='0' /></a>";
 echo "&nbsp;&nbsp;";
-echo "<a style='cursor:pointer' " . ($next?"onclick='paging(\"$next\", \"album\")'":"")."><img src='img/siguiente.png' border='0' /></a>";
+echo "<a style='cursor:pointer' " . ($next?"onclick='viewAlbum(\"$album_id\", \"after=$next\")'":"")."><img src='img/siguiente.png' border='0' /></a>";
 
 echo "</span>";
 echo "</div>";
