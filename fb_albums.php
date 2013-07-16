@@ -17,7 +17,7 @@ foreach($albums as $album) {
 	$album_id = $album['id'];					
 
 	$arr_res = getURL($album_id."/photos?access_token=".$token);		
-	$album_thumb=$arr_res['data'][0]['picture'];
+	$album_thumb=isset($arr_res['data'][0])?$arr_res['data'][0]['picture']:'';
 	
 	
 	echo "<td style='margin:2px;text-align:center;background-color:#f0f0f0;padding: 4px 20px 4px 4px;color:#FFFFFF;height:144px;font-size:11px;'>";

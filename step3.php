@@ -6,8 +6,8 @@ list($filename, $extension) = explode('.', $basename);
 $link = urlencode($app_url . "&app_data=view" . $filename);
 $picture = urlencode($canvas_page.$pic);
 $name = urlencode("FRIZZÉ - Escaripelas");
-$caption = urlencode("Caption");
-$description = urlencode("Description");
+$caption = urlencode("Ya tengo mi propia escaripela.");
+$description = urlencode("Viva la Joda!");
 $redirect_uri = urlencode($canvas_page."?thankyou");
 
 ?>
@@ -38,7 +38,7 @@ function share() {
     	<div id="divTituloS1">
 	    	<img src="img/comparti.png" />        
         </div>
-		<div id="divRecuadro">
+		<div id="divRecuadro" style="width:100%; height:433px;background-color:#f0f0f0;text-align:center;">
             <div style="float:left; padding:2px;"><img src="img/s3.png" /></div>
         </div>
     	<div id="divTxtBottom">

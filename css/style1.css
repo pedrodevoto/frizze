@@ -24,10 +24,8 @@ body{
 }
 
 #divRecuadro{
-	width:100%;
-	background-color:#f0f0f0;
-	height:433px;
-	text-align:center;
+
+	
 }
 
 #divTxtBottom{
@@ -45,7 +43,7 @@ body{
   display: block;
   opacity: 0.7;
   background-color: #fff;
-  z-index: 99;
+  z-index: 19999;
   text-align: center;
 }
 
@@ -53,7 +51,7 @@ body{
   position: absolute;
   top: 400px;
   left: 305px;
-  z-index: 100;
+  z-index: 20000;
 }
 /*----------------------
 	Camera slide up

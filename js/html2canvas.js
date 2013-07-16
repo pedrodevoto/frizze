@@ -13,6 +13,17 @@ previousElement,
 computedCSS,
 html2canvas;
 
+if (!window.getComputedStyle) {
+    window.getComputedStyle = function(el, pseudo) {
+ if (el.currentStyle) //IE
+  return el.currentStyle[prop]
+ else if (document.defaultView && document.defaultView.getComputedStyle) //Firefox
+  return document.defaultView.getComputedStyle(el, "")[prop]
+ else //try and get inline style
+  return el.style[prop]
+    }
+}
+
 function h2clog(a) {
   if (_html2canvas.logging && window.console && window.console.log) {
     window.console.log(a);

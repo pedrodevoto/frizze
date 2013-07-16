@@ -1,5 +1,6 @@
 <?php
-session_start();
+include("auth.php");
+
 /*
 	This file receives the JPEG snapshot
 	from webcam.swf as a POST request.
@@ -31,8 +32,9 @@ if (!$result) {
 	}';
 	exit;
 }
-
-echo '{"status":1,"message":"Success!","filename":"upload/'.$filename.'"}';
+$pic = "upload/".$filename;
+include("resize.php");
+// echo '{"status":1,"message":"Success!","filename":"upload/'.$filename.'"}';
 exit;
 
 $info = getimagesize($original);

@@ -13,7 +13,7 @@ $(document).ready(function(){
 
 
 	webcam.set_swf_url('webcam/webcam.swf');
-	webcam.set_api_url('upload.php');	// The upload script
+	webcam.set_api_url('upload.php?webcam');	// The upload script
 	webcam.set_quality(80);				// JPEG Photo Quality
 	webcam.set_shutter_sound(true, 'webcam/shutter.mp3');
 
@@ -35,7 +35,6 @@ $(document).ready(function(){
 		if(!shootEnabled){
 			return false;
 		}
-		
 		webcam.freeze();
 		togglePane();
 		return false;
@@ -51,6 +50,8 @@ $(document).ready(function(){
 		webcam.upload();
 		webcam.reset();
 		togglePane();
+		// $.colorbox.close();
+		// $('#loading').show();
 		return false;
 	});
 
@@ -106,7 +107,7 @@ $(document).ready(function(){
 		// JSON object format:
 		
 		msg = $.parseJSON(msg);
-		
+
 		if(msg.error){
 			alert(msg.message);
 		}
@@ -114,7 +115,7 @@ $(document).ready(function(){
 			// Adding it to the page;
 			// photos.prepend(templateReplace(template,{src:msg.filename}));
 			$.colorbox.close();
-			selectPhoto(msg.filename, false);
+			setPhoto(msg.filename, false, msg.width, msg.height);
 			// initFancyBox();
 		}
 	});
